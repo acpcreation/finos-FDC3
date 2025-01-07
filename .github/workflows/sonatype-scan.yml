@@ -35,7 +35,6 @@ jobs:
         working-directory: website
 
       # - run: npm i --package-lock-only
-      #   working-directory: website
           
       - name: Sonatype Lifecycle SCA Scan
         if: always()
@@ -51,6 +50,8 @@ jobs:
           scan-targets: .
           # scan-targets: "package-lock.json website/package-lock.json toolbox/fdc3-workbench/package-lock.json"
           module-exclude: ${{ env.ExcludeDirectory }}
+          sarif-file: sonatype-results.sarif
+          upload-sarif-file: true
           
       - name: Save Sonatype SBOM
         if: steps.evaluate.outputs.scan-id && always() 
